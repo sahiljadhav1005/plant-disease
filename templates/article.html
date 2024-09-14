@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Plant Disease Articles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            background-color: transparent;
+            /* This ensures the container is transparent */
+            padding: 20px;
+            /* Optional: keeps inner spacing */
+        }
+
+        /* Article Cards */
+        .articles-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 30px 60px;
+        }
+
+        .article-card {
+            background-color: white;
+            width: 30%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .article-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .article-content {
+            padding: 15px;
+        }
+
+        .article-content h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .article-content p {
+            font-size: 1em;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body class="background-image">
+
+    <!-- Header Section -->
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Plant Disease Articles</h1>
+            <p>Your guide to identifying and curing plant diseases</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul> 
+        <nav>
+            <div class="container articles-section">
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/anthracnose-leaf-blight-of-corn" class="article-link" target="_blank">
+                        <img src="static/images/LeafBlight.jpg" alt="Disease 1">
+                        <div class="article-content">
+                            <h3>Leaf Blight: Symptoms and Treatment</h3>
+                            <p>Learn how to identify and manage leaf blight in plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/powdery-mildew-of-wheat" class="article-link" target="_blank">
+                        <img src="static/images/pow.jpeg" alt="Disease 2">
+                        <div class="article-content">
+                            <h3>Powdery Mildew: Symptoms and Treatment</h3>
+                            <p>Find out how to deal with powdery mildew affecting your plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/root-rots-of-corn" class="article-link" target="_blank">
+                        <img src="static/images/root.jpeg" alt="Disease 3">
+                        <div class="article-content">
+                            <h3>Root Rot: Symptoms and Treatment</h3>
+                            <p>Discover ways to prevent and treat root rot in your garden.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/downy-mildew-of-soybean" class="article-link" target="_blank">
+                        <img src="static/images/downy.png" alt="Disease 4">
+                        <div class="article-content">
+                            <h3>Downy Mildew: Symptoms and Treatment</h3>
+                            <p>Learn how to control downy mildew and protect your plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/anthracnose-stalk-rot-of-corn" class="article-link" target="_blank">
+                        <img src="static/images/anthe.jpeg" alt="Disease 5">
+                        <div class="article-content">
+                            <h3>Anthracnose: Symptoms and Treatment</h3>
+                            <p>Identify anthracnose and learn effective management strategies.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/fusarium-wilt-of-cotton" class="article-link" target="_blank">
+                        <img src="static/images/fusarium.jpg" alt="Disease 6">
+                        <div class="article-content">
+                            <h3>Fusarium Wilt: Symptoms and Treatment</h3>
+                            <p>Understand fusarium wilt and how to manage it in your plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/bacterial-leaf-spot-of-alfalfa#:~:text=Bacterial%20leaf%20spot%20is%20caused,be%20severe%20in%20particular%20locations." class="article-link" target="_blank">
+                        <img src="static/images/bacterial.jpeg" alt="Disease 7">
+                        <div class="article-content">
+                            <h3>Bacterial Leaf Spot: Symptoms and Treatment</h3>
+                            <p>Learn to recognize bacterial leaf spot and control its spread.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/verticillium-wilt-of-cotton" class="article-link" target="_blank">
+                        <img src="static/images/verticillium.jpeg" alt="Disease 8">
+                        <div class="article-content">
+                            <h3>Verticillium Wilt: Symptoms and Treatment</h3>
+                            <p>Get tips on managing verticillium wilt in your garden.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/publications/an-overview-of-stem-canker" class="article-link" target="_blank">
+                        <img src="static/images/canker.png" alt="Disease 9">
+                        <div class="article-content">
+                            <h3>Canker Disease: Symptoms and Treatment</h3>
+                            <p>Find out how to treat canker disease affecting your plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/maps/southern-corn-rust" class="article-link" target="_blank">
+                        <img src="static/images/rust.jpg" alt="Disease 10">
+                        <div class="article-content">
+                            <h3>Rust Fungus: Symptoms and Treatment</h3>
+                            <p>Identify rust fungus and learn how to control it effectively.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/bacterial-blight-of-cotton" class="article-link" target="_blank">
+                        <img src="static/images/blackspot.jpeg" alt="Disease 11">
+                        <div class="article-content">
+                            <h3>Black Spot: Symptoms and Treatment</h3>
+                            <p>Learn to identify black spot and keep it under control.</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="article-card">
+                    <a href="https://cropprotectionnetwork.org/encyclopedia/stemphylium-leaf-spot-of-alfalfa" class="article-link" target="_blank">
+                        <img src="static/images/botrytis.jpeg" alt="Disease 12">
+                        <div class="article-content">
+                            <h3>Botrytis Blight: Symptoms and Treatment</h3>
+                            <p>Discover methods to treat botrytis blight in your plants.</p>
+                        </div>
+                    </a>
+                </div>
+                
+            </div>
+
+            <!-- Footer Section -->
+            <footer>
+                <p>&copy; 2024 Plant Disease Guide. All rights reserved.</p>
+            </footer>
+
+</body>
+
+</html>

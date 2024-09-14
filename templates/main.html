@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 25px auto;
+            padding: 20px;
+        }
+
+        .instructions-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .instructions-box h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .instructions-box ul {
+            list-style-type: disc;
+            text-align: left;
+            margin: 0 20px;
+            padding: 0;
+            color: #555;
+            font-size: 1rem;
+        }
+
+        .instructions-box ul li {
+            margin-bottom: 10px;
+        }
+
+        .instructions-box p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="background-image">
+
+     <!-- Header Section -->
+     <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Plant Disease Predictor</h1>
+            <p>Upload an image to detect plant diseases</p>
+        </div>
+    </header>
+    <!-- Navigation Section -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul> 
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Step Instructions Section -->
+        <div id="step-4" class="instructions-box">
+            <h2>Instructions for Image Upload</h2>
+            <p>Please ensure the following before proceeding with the image upload:</p>
+            <ul>
+                <li>Take a clear image of the affected part of the plant.</li>
+                <li>Ensure the image is well-lit and focused.</li>
+                <li>Only upload one image per diagnosis session.</li>
+            </ul>
+            <button class="button" type="button" onclick="showUploadForm()">Proceed</button>
+        </div>
+
+        <!-- Upload Section (Initially Hidden) -->
+        <div id="upload-section" class="hidden">
+            <form id="uploadForm">
+                <input type="file" name="image" accept="image/*" required>
+                <button type="submit">Predict Disease</button>
+            </form>
+            <div id="loading" class="hidden">Analyzing...</div> <!-- Loading indicator -->
+            <div id="output" class="result"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Plant Disease Predictor | All Rights Reserved</p>
+    </footer>
+
+
+    <script>
+        // Function to show the upload form after reading instructions
+        function showUploadForm() {
+            document.getElementById('step-4').classList.add('hidden'); // Hide instructions
+            document.getElementById('upload-section').classList.remove('hidden'); // Show upload form
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const loadingDiv = document.getElementById('loading');
+            const outputDiv = document.getElementById('output');
+
+            // Show loading message and hide previous results
+            loadingDiv.classList.remove('hidden');
+            outputDiv.innerHTML = '';
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    outputDiv.innerHTML = `
+                        <strong>Disease Detected:</strong> ${result.disease}<br>
+                        <strong>Recommendation:</strong> ${result.recommendation}
+                    `;
+                } else {
+                    outputDiv.innerHTML = `<span class="error">Error: ${result.error}</span>`;
+                }
+            } catch (error) {
+                outputDiv.innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            } finally {
+                // Hide loading message once the process is finished
+                loadingDiv.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>

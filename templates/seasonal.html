@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Planting Suggestions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid rgba(221, 221, 221, 0.8);
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4CAF50;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 1.1em;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .suggestions-box {
+            margin-top: 30px;
+            border: 1px solid #d1e7dd;
+            border-radius: 8px;
+            background-color: #e9f5e0;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestions-box h2 {
+            font-size: 1.6em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .suggestions-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .suggestions-box li {
+            background-color: #d4edda;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid #c3e6cb;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .suggestions-box li:hover {
+            background-color: #c3e6cb;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body class="background-image">
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Seasonal Planting Suggestions</h1>
+            <p>Find out which plants are best suited for the current season and your location to optimize your garden.</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+    </nav>
+
+    <main>
+        <form id="location-form" action="{{ url_for('get_suggestions') }}" method="POST">
+            <label for="location">Enter your location:</label>
+            <input type="text" id="location" name="location" placeholder="City, State/Country" required>
+        
+            <label>Choose season detection method:</label>
+            <label>
+                <input type="radio" id="auto-detect" name="season_method" value="auto" checked>
+                Auto-detect current season
+            </label>
+            <label>
+                <input type="radio" id="manual-input" name="season_method" value="manual">
+                Manually input month:
+            </label>
+            <input type="text" id="month" name="month" placeholder="Month number (e.g., 3 for March)" disabled>
+        
+            <button type="submit">Get Suggestions</button>
+        </form>
+        
+        <div id="result-box" style="color: red; margin-top: 10px;"></div>
+        
+
+        <!-- Display suggestions -->
+        {% if suggestions %}
+        <div class="suggestions-box">
+            <h2>Recommended Plants for the Selected or Current Season</h2>
+            <ul>
+                {% for suggestion in suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+            <div>
+        {% elif no_suggestions %}
+            <p>No suggestions available. Please enter valid information.</p>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Plant Health Solutions</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const autoDetectRadio = document.getElementById('auto-detect');
+            const manualInputRadio = document.getElementById('manual-input');
+            const monthInput = document.getElementById('month');
+            const locationInput = document.getElementById('location');
+            const form = document.getElementById('location-form');
+            const resultBox = document.getElementById('result-box');
+    
+            // Toggle month input based on selected season detection method
+            manualInputRadio.addEventListener('change', function() {
+                monthInput.disabled = false;
+            });
+    
+            autoDetectRadio.addEventListener('change', function() {
+                monthInput.disabled = true;
+                monthInput.value = ''; // Clear month input when auto-detect is selected
+            });
+    
+            // Form submission handler
+            form.addEventListener('submit', function(event) {
+                let isValid = true;
+                let errorMessage = '';
+    
+                // Clear previous error messages
+                resultBox.innerHTML = '';
+    
+                // Validate location
+                if (locationInput.value.trim() === '') {
+                    isValid = false;
+                    errorMessage += 'Location cannot be empty.<br>';
+                }
+    
+                // Validate month if manually input is selected
+                if (manualInputRadio.checked) {
+                    const monthValue = parseInt(monthInput.value, 10);
+                    if (isNaN(monthValue) || monthValue < 1 || monthValue > 12) {
+                        isValid = false;
+                        errorMessage += 'Month must be a number between 1 and 12.<br>';
+                    }
+                }
+    
+                if (!isValid) {
+                    resultBox.innerHTML = errorMessage;
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+    
+
+</body>
+
+</html>

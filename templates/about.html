@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Plant Disease Identifier</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .social-media {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-media a {
+            margin: 0 10px;
+            color: #333;
+            /* Default color for icons */
+            font-size: 24px;
+            /* Size of icons */
+            text-decoration: none;
+        }
+
+        .social-media a:hover {
+            color: #007bff;
+            /* Change color on hover */
+        }
+
+        footer {
+            position: sticky;
+            z-index: 2;
+            /* Ensures footer is stacked above other content */
+        }
+
+        /* Core Values Section Styling */
+        .core-values {
+            margin-bottom: 60px;
+            /* Ensure space at the bottom */
+            padding: 20px;
+            background-color: #f4f4f4;
+            /* Example background color */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+            /* Lower z-index to ensure it is below the footer */
+        }
+
+        /* Additional CSS to ensure sections do not overlap */
+        section {
+            position: relative;
+            z-index: 1;
+            /* Higher z-index to ensure it appears above the footer */
+            margin-bottom: 20px;
+            /* Adjust margin to provide space between sections */
+        }
+    </style>
+</head>
+</head>
+
+<body class="background-image">
+
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>About Us</h1>
+            <p>Learn more about our mission and team.</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul>
+        <nav>
+            <section>
+                <h2>Our Mission</h2>
+                <p>At Plant Health Solutions, our mission is to empower gardeners and farmers with the tools and
+                    knowledge they need to keep their plants healthy. Our platform provides reliable plant disease
+                    identification, treatment suggestions, and fertilizer calculators to support sustainable agriculture
+                    and successful gardening.</p>
+
+                <h2>Our History</h2>
+                <p>Founded in 2010, Plant Health Solutions started as a small project to help local farmers diagnose
+                    plant diseases. Over the years, we've grown into a leading platform for plant health, serving
+                    thousands of gardeners and farmers worldwide.</p>
+
+                <h2>Core Values</h2>
+                <ul>
+                    <li><strong>Integrity:</strong> We commit to providing accurate and honest information.</li>
+                    <li><strong>Innovation:</strong> We continuously improve our tools and resources to meet the needs
+                        of our users.</li>
+                    <li><strong>Sustainability:</strong> We promote practices that support environment & long-term plant
+                        health.</li>
+                </ul>
+
+                <h2>Achievements</h2>
+                <p>We are proud to have been awarded the Green Innovation Award in 2022 for our contributions to
+                    sustainable agriculture.</p>
+
+                <h2>Meet the Team</h2>
+                <div class="team">
+                    <div class="team-member">
+                        <img src="static/images/sahil.jpg" alt="Dr. Sahil Jadhav">
+                        <h3>Dr. Sahil Jadhav</h3>
+                        <p>Lead Plant Pathologist</p>
+                    </div>
+
+                    <div class="team-member">
+                        <img src="static/images/sahils.png" alt="Team Member 2">
+                        <h3>Sahil Salunkhe</h3>
+                        <p>Software Engineer</p>
+                    </div>
+                    <!-- Add more team members as needed -->
+                </div>
+
+                <h2>Contact Us</h2>
+                <div class="contact-details">
+                    <p><strong>Email:</strong> <a
+                            href="mailto:contact@planthealthsolutions.com">contact@planthealthsolutions.com</a></p>
+                    <p><strong>Phone:</strong> +1 (123) 456-7890</p>
+                    <p><strong>Address:</strong> 123 Greenway Drive, Suite 100, Hometown, ST 12345</p>
+                </div>
+
+
+                <h2>Follow Us</h2>
+                <div class="social-media">
+                    <a href="https://www.facebook.com/planthealthsolutions" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com/planthealth" target="_blank" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://www.instagram.com/planthealthsolutions" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2024 Plant Health Solutions</p>
+            </footer>
+</body>
+
+</html>

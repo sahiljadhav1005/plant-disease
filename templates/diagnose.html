@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnose Plant Disease</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .result-heading {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-message {
+            font-size: 18px;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .result-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .result-button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .placement-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .placement-options input[type="radio"] {
+            display: none;
+        }
+
+        .placement-options label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .placement-options label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            background-color: #fff;
+        }
+
+        .placement-options input[type="radio"]:checked+label::before {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .placement-options input[type="radio"]:checked+label::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+    </style>
+</head>
+
+<body class="background-image">
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Diagnose Plant Disease</h1>
+            <p>Diagnose plant diseases quickly and get solutions to keep your crops healthy.</p>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul>
+    </nav>
+    <section>
+        <form id="diagnose-form" action="/process-diagnosis" method="post">
+
+            <!-- Step 1: Select Plant Type -->
+            <div id="step-1" class="form-section">
+                <label for="plant-type">Select Plant Type:</label>
+                <select id="plant-type" name="plant_type" required>
+                    <option value="">--Select Plant--</option>
+                    <option value="tomato">Tomato</option>
+                    <option value="rose">Rose</option>
+                    <option value="wheat">Wheat</option>
+                    <option value="carrot">Carrot</option>
+                    <option value="lettuce">Lettuce</option>
+                    <option value="cucumber">Cucumber</option>
+                    <option value="pepper">Pepper</option>
+                    <option value="corn">Corn</option>
+                    <option value="spinach">Spinach</option>
+                    <option value="potato">Potato</option>
+                    <option value="onion">Onion</option>
+                    <option value="garlic">Garlic</option>
+                    <option value="bean">Bean</option>
+                    <option value="cabbage">Cabbage</option>
+                    <option value="cauliflower">Cauliflower</option>
+                    <option value="broccoli">Broccoli</option>
+                    <option value="eggplant">Eggplant</option>
+                    <option value="squash">Squash</option>
+                    <option value="pumpkin">Pumpkin</option>
+                    <option value="zucchini">Zucchini</option>
+                    <option value="strawberry">Strawberry</option>
+                    <option value="blueberry">Blueberry</option>
+                    <option value="raspberry">Raspberry</option>
+                    <option value="blackberry">Blackberry</option>
+                    <option value="grape">Grape</option>
+                    <option value="apple">Apple</option>
+                    <option value="pear">Pear</option>
+                    <option value="peach">Peach</option>
+                    <option value="plum">Plum</option>
+                    <option value="cherry">Cherry</option>
+                    <option value="apricot">Apricot</option>
+                    <option value="fig">Fig</option>
+                    <option value="pomegranate">Pomegranate</option>
+                    <option value="kiwi">Kiwi</option>
+                </select>
+                <button type="button" onclick="showNextStep()">Next</button>
+            </div>
+
+            <!-- Step 2: Select Plant Placement -->
+            <div id="step-2" class="form-section hidden">
+                <label for="plant-placement">Where is your plant placed?</label>
+                <div class="placement-options">
+                    <input type="radio" id="pot" name="placement" value="pot" required>
+                    <label for="pot">Pot</label>
+
+                    <input type="radio" id="home-garden" name="placement" value="home-garden">
+                    <label for="home-garden">Home Garden</label>
+
+                    <input type="radio" id="field" name="placement" value="field">
+                    <label for="field">Field</label>
+                </div>
+                <button type="button" onclick="showNextStep()">Next</button>
+            </div>
+
+            <!-- Step 3: Location and Temperature -->
+            <div id="step-3" class="form-section hidden">
+                <label for="location">Enter Location or Use Auto-Detect:</label>
+                <input type="text" id="location" name="location" placeholder="--Enter location manually--">
+                <button type="button" onclick="detectLocation()">Auto-Detect Location</button>
+
+                <label for="temperature">Enter Temperature (°C):</label>
+                <input type="number" id="temperature" name="temperature" placeholder="--Enter temperature manually--">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Plant Health Solutions</p>
+    </footer>
+
+    <script>
+        function showNextStep() {
+            const currentStep = document.querySelector('.form-section:not(.hidden)');
+            let isValid = true;
+
+            if (currentStep.id === 'step-1') {
+                const plantType = document.getElementById('plant-type').value;
+                if (!plantType) {
+                    isValid = false;
+                    alert('Please select a plant type.');
+                }
+            }
+
+            if (currentStep.id === 'step-2') {
+                const placement = document.querySelector('input[name="placement"]:checked');
+                if (!placement) {
+                    isValid = false;
+                    alert('Please select a plant placement.');
+                }
+            }
+
+            if (isValid) {
+                const nextStep = currentStep.nextElementSibling;
+                if (nextStep && nextStep.classList.contains('form-section')) {
+                    currentStep.classList.add('hidden');
+                    nextStep.classList.remove('hidden');
+                }
+            }
+        }
+
+        function detectLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Use Nominatim API for reverse geocoding
+            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const place = data.display_name;
+                    document.getElementById('location').value = place;
+                    alert("Detected location: " + place);
+                })
+                .catch(error => {
+                    console.error('Error fetching location:', error);
+                    alert("Could not retrieve the location.");
+                });
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>

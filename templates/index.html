@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Identification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="background-image">
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Welcome to Plant Disease Identifier</h1>
+            <p>Identify diseases, get treatments, and calculate fertilizers easily.</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('diagnose') }}">Plant Condition</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul>
+        <nav>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <form action="{{ url_for('search_disease') }}" method="POST">
+                    <input type="text" placeholder="Search for a plant or disease..." name="search_query">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- Display flashed messages -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class="flashed-messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Disease Information Box -->
+            {% if disease_info %}
+            <div class="disease-info-box">
+                <h2>Disease Information</h2>
+                <div class="image-container">
+                    <img src="{{ disease_image }}" alt="Disease Image" class="disease-image">
+                </div>
+                <p>{{ disease_info }}</p>
+            </div>
+            {% endif %}
+
+            <footer>
+                <p>&copy; 2024 Plant Health Solutions</p>
+            </footer>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"></head>
+</head>
+<body class="background-image">
+    <header class="header-content">
+        <div class="header-logo">
+            <img src="{{ url_for('static', filename='images/logo3.png') }}" alt="Logo" class="logo-image">
+        </div>
+        <div class="header-text">
+            <h1>Fertilizer Calculator</h1>
+            <p>Use our Fertilizer Calculator to determine the right amount of nutrients for your crops.</p>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('diagnose') }}">plant conditon</a></li>
+            <li><a href="{{ url_for('main') }}">Diagnose Disease</a></li> <!-- New link -->
+            <li><a href="{{ url_for('fertilizer') }}">Fertilizer Calculator</a></li>
+            <li><a href="{{ url_for('seasonal') }}">Seasonal Plants</a></li>
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('article') }}">Article</a></li>
+            <li><a href="{{ url_for('help') }}">Help</a></li>
+        </ul> 
+    <nav>
+    <section>
+        <form id="fertilizer-form">
+            <label for="crop-type">Select Crop Type:</label>
+            <select id="plant-type" required>
+                <option value="">--Select Plant--</option>
+                <option value="tomato">Tomato</option>
+                <option value="rose">Rose</option>
+                <option value="wheat">Wheat</option>
+                <option value="carrot">Carrot</option>
+                <option value="lettuce">Lettuce</option>
+                <option value="cucumber">Cucumber</option>
+                <option value="pepper">Pepper</option>
+                <option value="corn">Corn</option>
+                <option value="spinach">Spinach</option>
+                <option value="potato">Potato</option>
+                <option value="onion">Onion</option>
+                <option value="garlic">Garlic</option>
+                <option value="bean">Bean</option>
+                <option value="cabbage">Cabbage</option>
+                <option value="cauliflower">Cauliflower</option>
+                <option value="broccoli">Broccoli</option>
+                <option value="eggplant">Eggplant</option>
+                <option value="squash">Squash</option>
+                <option value="pumpkin">Pumpkin</option>
+                <option value="zucchini">Zucchini</option>
+                <option value="strawberry">Strawberry</option>
+                <option value="blueberry">Blueberry</option>
+                <option value="raspberry">Raspberry</option>
+                <option value="blackberry">Blackberry</option>
+                <option value="grape">Grape</option>
+                <option value="apple">Apple</option>
+                <option value="pear">Pear</option>
+                <option value="peach">Peach</option>
+                <option value="plum">Plum</option>
+                <option value="cherry">Cherry</option>
+                <option value="apricot">Apricot</option>
+                <option value="fig">Fig</option>
+                <option value="pomegranate">Pomegranate</option>
+                <option value="kiwi">Kiwi</option>
+            </select>            
+            <label for="area-size">Enter Area Size (sq. meters):</label>
+            <input type="number" id="area-size" placeholder="Enter area size" required>
+
+            <button type="submit">Calculate Fertilizer</button>
+        </form>
+
+        <div id="results">
+            <!-- Results will be displayed here -->
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Plant Health Solutions</p>
+    </footer>
+
+    <!-- Correct path to the script file -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
